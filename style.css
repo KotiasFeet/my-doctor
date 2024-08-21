@@ -1,0 +1,24 @@
+#myCheckboxs{
+    font-size: 1.5em;
+    font-family: Helvetica;
+}
+#header{
+    font-size: 3em;
+    font-family: Helvetica;
+}
+
+#buttonContainer{
+    text-align: left;
+}
+.button{
+    padding: 7px 15px;
+    font-size: 1em;
+    color: white;
+    background-color: hsl(193, 100%, 68%);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.25s;
+}
+.button:hover{
+    background-color: hsl(193, 100%, 45%);
+}
