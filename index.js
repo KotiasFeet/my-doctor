@@ -10,6 +10,8 @@ const synth = window.speechSynthesis;
 let voices = synth.getVoices();
 var msg = new SpeechSynthesisUtterance();
 
+textToSpeech(header.textContent, 7);
+
 nextButton.onclick = function(){
     
     if(checkIfAnyCheckboxIsChecked() || stage == 2){
@@ -24,10 +26,11 @@ nextButton.onclick = function(){
         header.textContent = "For how long have you had them?";
         textToSpeech(header.textContent, 7);
 
-        labels[0].textContent = "1 day";
-        labels[1].textContent = "2 to 5 days";
-        labels[2].textContent = "5 to 12 days";
-        labels[3].textContent = ">12 days";
+        labels[0].textContent = "<1 day";
+        labels[1].textContent = "2 to 7 days";
+        labels[2].textContent = ">7";
+        document.getElementById("myCheckboxs").removeChild(labels[3]);
+        document.getElementById("myCheckboxs").removeChild(checkboxes[3]);
     }
 
     else if(stage == 2){
@@ -35,6 +38,8 @@ nextButton.onclick = function(){
         hideLabelsAndCheckboxes();
         header.textContent = "Check completed. Press \"Submit\" button to see the results.";
         textToSpeech(header.textContent, 7); 
+
+        document.getElementById("myCheckboxs").remove();
 
         nextButton.textContent = "Submit";
         nextButton.style.padding = "30px 60px";
