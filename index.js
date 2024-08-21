@@ -4,7 +4,10 @@ const header = document.getElementById("header");
 var checkboxes = document.getElementsByName("options");
 var labels = document.getElementsByClassName("cbLabel");
 
-let stage = 0;
+var stage = 0;
+
+const synth = window.speechSynthesis;
+let voices;
 
 nextButton.onclick = function(){
     
@@ -35,8 +38,24 @@ nextButton.onclick = function(){
     else if(stage == 3){
         nextButton.style.display = "none";
         header.style.fontSize = "2em";
-        textPrinter("Consgratulations! \n\n\n\n\n\n\n\n\n\nYou have terminal cancer!", 50);
+
+        var message = "Congratulations! \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nYou have terminal cancer!";
+        textPrinter(message, 40);
+        textToSpeech(message, 8);    
     }
+}
+
+
+function textToSpeech(text, voice){
+    voices = synth.getVoices();
+
+    for(var i = 0; i < voices.length; i++){
+        console.log(voices[i].lang);
+    }
+
+    var speech = new SpeechSynthesisUtterance(text)
+    speech.voice = voices[voice];
+    synth.speak(speech);
 }
 
 function checkIfAnyCheckboxIsChecked(){
@@ -55,14 +74,12 @@ function checkIfAnyCheckboxIsChecked(){
 
 async function textPrinter(text, delay){
     var textArray = text.split("");
-    console.log(textArray);
 
     var printer = [];
 
     for(var i = 0; i < textArray.length; i++){
         printer[i] = String(textArray[i]);
         header.textContent = String(printer.join(""));
-        console.log(printer.join(""));
         await new Promise(resolve => setTimeout(resolve, delay));
     }
 }
