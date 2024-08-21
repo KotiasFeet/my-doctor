@@ -4,24 +4,31 @@ const header = document.getElementById("header");
 var checkboxes = document.getElementsByName("options");
 var labels = document.getElementsByClassName("cbLabel");
 
-var stage = 0;
+var stage = -1;
 
 const synth = window.speechSynthesis;
-let voices = synth.getVoices();
+var voices = window.speechSynthesis.getVoices();
+
+setTimeout(function(){console.log(voices);},3000);
+
+
 var msg = new SpeechSynthesisUtterance();
 
-textToSpeech(header.textContent, 7);
+
+while(stage == -1){
+    textToSpeech(header.textContent, 7);
+    stage++;
+}
 
 nextButton.onclick = function(){
-    
-    if(checkIfAnyCheckboxIsChecked() || stage == 2){
+
+    if((checkIfAnyCheckboxIsChecked() || stage == 2) && stage >= 0){
         stage++;
     }
-
     uncheckAll();
 
     if(stage == 1){
-        speechSynthesis.cancel();
+        synth.cancel();
         setAttributeTypeTo("radio");
         header.textContent = "For how long have you had them?";
         textToSpeech(header.textContent, 7);
@@ -34,7 +41,7 @@ nextButton.onclick = function(){
     }
 
     else if(stage == 2){
-        speechSynthesis.cancel();
+        synth.cancel();
         hideLabelsAndCheckboxes();
         header.textContent = "Check completed. Press \"Submit\" button to see the results.";
         textToSpeech(header.textContent, 7); 
@@ -47,7 +54,7 @@ nextButton.onclick = function(){
     }
     
     else if(stage == 3){
-        speechSynthesis.cancel();
+        synth.cancel();
         nextButton.style.display = "none";
         header.style.fontSize = "2em";
 
@@ -61,10 +68,11 @@ nextButton.onclick = function(){
 
 
 function textToSpeech(text, voiceType){
+    console.log(voices);
     voices = synth.getVoices();
     console.log(voices);
     msg.text = text;
-    msg.voice = voices[7];
+    msg.voice = voices[voiceType];
     synth.speak(msg);
 }
 
