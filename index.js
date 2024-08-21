@@ -7,7 +7,11 @@ var labels = document.getElementsByClassName("cbLabel");
 let stage = 0;
 
 nextButton.onclick = function(){
-    stage++;
+    
+    if(checkIfAnyCheckboxIsChecked() || stage == 2){
+        stage++;
+    }
+
     uncheckAll();
 
     if(stage == 1){
@@ -35,6 +39,19 @@ nextButton.onclick = function(){
     }
 }
 
+function checkIfAnyCheckboxIsChecked(){
+    var checkedBoxes = 0;
+    for(var i = 0; i < checkboxes.length; i++){
+        if(checkboxes[i].checked){
+            checkedBoxes++;
+        }
+    }
+
+    if(checkedBoxes > 0){
+        return true;
+    }
+    return false;
+}
 
 async function textPrinter(text, delay){
     var textArray = text.split("");
