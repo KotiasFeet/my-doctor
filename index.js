@@ -7,8 +7,8 @@ var labels = document.getElementsByClassName("cbLabel");
 var stage = 0;
 
 const synth = window.speechSynthesis;
-
-
+let voices = synth.getVoices();
+var msg = new SpeechSynthesisUtterance();
 
 nextButton.onclick = function(){
     
@@ -19,6 +19,7 @@ nextButton.onclick = function(){
     uncheckAll();
 
     if(stage == 1){
+        speechSynthesis.cancel();
         setAttributeTypeTo("radio");
         header.textContent = "For how long have you had them?";
         textToSpeech(header.textContent, 7);
@@ -30,6 +31,7 @@ nextButton.onclick = function(){
     }
 
     else if(stage == 2){
+        speechSynthesis.cancel();
         hideLabelsAndCheckboxes();
         header.textContent = "Check completed. Press \"Submit\" button to see the results.";
         textToSpeech(header.textContent, 7); 
@@ -40,6 +42,7 @@ nextButton.onclick = function(){
     }
     
     else if(stage == 3){
+        speechSynthesis.cancel();
         nextButton.style.display = "none";
         header.style.fontSize = "2em";
 
@@ -49,14 +52,15 @@ nextButton.onclick = function(){
     }
 }
 
-let voices;
-var speech = new SpeechSynthesisUtterance()
 
-function textToSpeech(text, voice){
+
+
+function textToSpeech(text, voiceType){
     voices = synth.getVoices();
-    speech.text = text;
-    speech.voice = voices[voice];
-    synth.speak(speech);
+    console.log(voices);
+    msg.text = text;
+    msg.voice = voices[7];
+    synth.speak(msg);
 }
 
 function checkIfAnyCheckboxIsChecked(){
