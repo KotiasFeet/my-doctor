@@ -7,20 +7,8 @@ var labels = document.getElementsByClassName("cbLabel");
 let stage = 0;
 
 nextButton.onclick = function(){
-
-
     
-    if(
-        function(){ 
-            for(var i = 0; i < checkboxes.length; i++)
-                {
-                    if(checkboxes[i].checked == false) {
-                        return fasle;
-                    }
-                    return true;
-                } 
-            }
-        ){
+    if(checkIfAnyCheckboxIsChecked() || stage == 2){
         stage++;
     }
 
@@ -51,6 +39,19 @@ nextButton.onclick = function(){
     }
 }
 
+function checkIfAnyCheckboxIsChecked(){
+    var checkedBoxes = 0;
+    for(var i = 0; i < checkboxes.length; i++){
+        if(checkboxes[i].checked){
+            checkedBoxes++;
+        }
+    }
+
+    if(checkedBoxes > 0){
+        return true;
+    }
+    return false;
+}
 
 async function textPrinter(text, delay){
     var textArray = text.split("");
