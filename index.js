@@ -7,7 +7,8 @@ var labels = document.getElementsByClassName("cbLabel");
 var stage = 0;
 
 const synth = window.speechSynthesis;
-let voices;
+
+
 
 nextButton.onclick = function(){
     
@@ -20,6 +21,7 @@ nextButton.onclick = function(){
     if(stage == 1){
         setAttributeTypeTo("radio");
         header.textContent = "For how long have you had them?";
+        textToSpeech(header.textContent, 7);
 
         labels[0].textContent = "1 day";
         labels[1].textContent = "2 to 5 days";
@@ -30,6 +32,8 @@ nextButton.onclick = function(){
     else if(stage == 2){
         hideLabelsAndCheckboxes();
         header.textContent = "Check completed. Press \"Submit\" button to see the results.";
+        textToSpeech(header.textContent, 7); 
+
         nextButton.textContent = "Submit";
         nextButton.style.padding = "30px 60px";
         nextButton.style.fontSize = "2em";
@@ -39,21 +43,18 @@ nextButton.onclick = function(){
         nextButton.style.display = "none";
         header.style.fontSize = "2em";
 
-        var message = "Congratulations! \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nYou have terminal cancer!";
+        var message = "Congratulations! \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nYou have terminal cancer!";
         textPrinter(message, 40);
-        textToSpeech(message, 8);    
+        textToSpeech(message, 7);    
     }
 }
 
+let voices;
+var speech = new SpeechSynthesisUtterance()
 
 function textToSpeech(text, voice){
     voices = synth.getVoices();
-
-    for(var i = 0; i < voices.length; i++){
-        console.log(voices[i].lang);
-    }
-
-    var speech = new SpeechSynthesisUtterance(text)
+    speech.text = text;
     speech.voice = voices[voice];
     synth.speak(speech);
 }
